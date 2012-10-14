@@ -1,3 +1,3 @@
-# Theme: Athey Creek
+# Theme: Anchor Church
 
-This theme is used by Athey Creek church at http://atheycreek.com
+This is the default theme for [Church Deploy](http://churchdeploy.com/)
