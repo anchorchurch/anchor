@@ -1,25 +1,42 @@
 module.exports = function (grunt) {
   'use strict';
 
+  // Load local NPM tasks
+  grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-growl');
+
   grunt.initConfig({
 
     lint : {
-      all: ['../js/common.js', '../js/alertManager.js']
+      all: [
+        '../js/anchor.js',
+        '../js/alertManager.js'
+      ]
     },
 
     minify : {
       all: [
-        '../less/common.less',
-        '../coffee/*.coffee'
+        '../less/anchor.less',
+        '../less/ie7.less'
       ]
     },
 
     recess: {
-      dist: {
+      main: {
         src: [
-        '../less/common.less'
+        '../less/anchor.less'
         ],
-        dest: '../css/common.2.3.2.css',
+        dest: '../css/anchor.2.4.1.css',
+        options: {
+            compile: true,
+            compress: true
+        }
+      },
+      ie7: {
+        src: [
+        '../less/ie7.less'
+        ],
+        dest: '../css/ie7.css',
         options: {
             compile: true,
             compress: true
@@ -27,21 +44,18 @@ module.exports = function (grunt) {
       }
     },
 
-    coffee: {
-      app: {
-        src: ['../coffee/*.coffee'],
-        dest: '../js/'
-      }
-    },
-
     watch : {
       scripts: {
-        files: '<config:minify.all>',
-        tasks: 'coffee concat recess:dist growl:watch'
+        files: [
+          '../less/*.less',
+          '../js/*.js',
+          '../../../js/*.js'
+        ],
+        tasks: 'lint:all min:dist recess:ie7 recess:main'
       }
     },
 
-    concat : {
+    min: {
       dist: {
         src : [
           '../../../bootstrap/docs/assets/js/jquery.js',
@@ -49,30 +63,22 @@ module.exports = function (grunt) {
           '../../../bootstrap/docs/assets/js/bootstrap.min.js',
           '../../../js/responsimage.js',
           '../../../js/jquery.cookie.js',
-          '../js/audio.min.js',
-          '../js/reftagger.js',
+          '../../../js/mediaelement.js',
+          '../../../js/reftagger.js',
           '<config:lint.all>'],
-        dest: '../js/common-ck.2.3.2.js'
+        dest: '../js/anchor.2.4.1.js',
+        separator: ';'
       }
     },
 
     growl : {
       compile : {
-        message : "Grunt was run successfully",
-        title : "Grunt.js"
-      },
-      watch: {
-        message : "Grunt is watching your files",
-        title : "Grunt.js"
+        title : "Grunt.js",
+        message : "Grunt was run successfully"
       }
     }
 
-  });
-
-// Load local NPM tasks
-grunt.loadNpmTasks('grunt-recess');
-grunt.loadNpmTasks('grunt-coffee');
-grunt.loadNpmTasks('grunt-growl');
+});
 
 // Main task
-grunt.registerTask('default', 'coffee concat recess:dist growl:compile')};
+grunt.registerTask('default', 'lint:all min:dist recess:ie7 recess:main growl:compile')};

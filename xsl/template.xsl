@@ -10,7 +10,7 @@
 	/>
 
 <xsl:template name="template-head">
-	<link rel="stylesheet" href="{$workspace}/themes/active/css/common.2.3.2.css" />
+	<link rel="stylesheet" href="{$workspace}/themes/active/css/anchor.2.4.1.css" />
 	<xsl:comment><![CDATA[[if lte IE 7]> <link rel="stylesheet" href="{$workspace}/themes/active/css/font-awesome-ie7.css" /> <![endif]]]></xsl:comment>
 	<link rel="canonical" href="{$current-url}" />
 	<xsl:choose>
@@ -481,7 +481,7 @@
 			function downloadJSAtOnload() {
 				var js = {
 					"scripts":[
-						"/workspace/themes/active/js/common-ck.2.3.2.js"
+						"/workspace/themes/active/js/anchor.2.4.1.js"
 					]
 				};
 				var supportsJson = (!!window.JSON &amp;&amp; !!JSON.parse);
