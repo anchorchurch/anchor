@@ -431,17 +431,14 @@
 						</div>
 						<div class="copyright">
 							<xsl:text>© </xsl:text>
-							<xsl:text>2011-</xsl:text>
 							<xsl:value-of select="$this-year" />
-							<xsl:text>. </xsl:text>
+							<xsl:text> </xsl:text>
 							<a href="{$root}"><xsl:value-of select="$website-name" /></a>
-							<xsl:text>. All&#160;rights&#160;reserved. </xsl:text>
-							<span class="dev">
-							   <a href="{$root}/13563/our-website/">Built with Church Deploy</a>
-							   <span class="divider">|</span>
-							   <a href="{$root}/13667/api/">API</a>
-							   <br />
-							</span>
+							<xsl:text>. All&#160;rights&#160;reserved.</xsl:text>
+							<span class="divider">|</span>
+					    <a href="{$root}/13563/our-website/">Built with Church Deploy.</a>
+					    <span class="divider">|</span>
+					    <a href="{$root}/13667/api/">API</a>
 						</div>
 					</div>
 				</div>
@@ -473,41 +470,7 @@
 
 
 <xsl:template name="template-footer-outside-container">
-
-	<script type="text/javascript">
-		<xsl:comment>
-		(function (window) {
-			'use strict';
-			function downloadJSAtOnload() {
-				var js = {
-					"scripts":[
-						"/workspace/themes/active/js/anchor.2.4.1.js"
-					]
-				};
-				var supportsJson = (!!window.JSON &amp;&amp; !!JSON.parse);
-
-		        if(!supportsJson){
-		          js.scripts.push("/workspace/js/json2.min.js");
-		        }
-				for (var key in js.scripts) {
-					if (js.scripts[key]) {
-						var element=document.createElement("script");
-						element.src=js.scripts[key];
-						document.body.appendChild(element);
-					}
-				}
-			}
-			if(window.addEventListener) {
-				window.addEventListener("load",downloadJSAtOnload,false);
-			} else if (window.attachEvent) {
-				window.attachEvent("onload",downloadJSAtOnload);
-			} else {
-				window.onload=downloadJSAtOnload;
-			}
-		}(window));
-		//</xsl:comment>
-	</script>
-
+	<script src="{$workspace}/themes/active/export/combined.js"></script>
 </xsl:template>
 
 
