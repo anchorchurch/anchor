@@ -3,13 +3,10 @@
 
 
 <xsl:template name="component-teachings">
-
 	<xsl:param name="component" select="'teachings'" />
 	<xsl:param name="position" />
 	<xsl:param name="entries" />
-
 	<xsl:if test="count($entries)">
-
 		<xsl:choose>
 			<xsl:when test="not(number($pt3)) and not(number($pt4)) and $pt4">
 				<div class="title-wrapper">
@@ -340,14 +337,11 @@
 			</div>
 		</div>
 	</xsl:if>
-
 </xsl:template>
 
 
 <xsl:template name="teaching-entry">
-
 	<xsl:param name="entry" select="." />
-
 	<xsl:for-each select="$entry">
 		<xsl:if test="not($pt1) and video/item">
 			<div class="row">
@@ -454,7 +448,6 @@
 				</div>
 			</div>
 		</xsl:if>
-
 		<xsl:if test="not(number($pt3))">
 			<xsl:choose>
 				<xsl:when test="not($pt1)">
@@ -507,38 +500,31 @@
 			</xsl:choose>
 		</xsl:if>
 	</xsl:for-each>
-
 </xsl:template>
 
 
 <xsl:template name="teaching-actions">
-
 	<xsl:param name="entry" select="." />
-
 	<xsl:variable name="audio-url">
 		<!-- <xsl:text>http://72.10.33.203/media/audio/teachings/</xsl:text> -->
 		<xsl:text disable-output-escaping="yes">http://66.147.244.244/~atheycre/teachings/</xsl:text>
 		<xsl:value-of select="translate(filename,$en-uppercase-letters,$en-lowercase-letters)"/>
 		<xsl:text>.mp3</xsl:text>
 	</xsl:variable>
-
 	<div>
 		<xsl:call-template name="class-rows" />
-
 		<div class="button-wrapper">
 			<a href="{$audio-url}" class="btn downloadPopover pull-right" rel="popover" data-content="Right-click on this link and use the 'Save As' or 'Download File As' dialog to download teachings." data-original-title="Downloads" target="_blank">
 	        	<i class="icon-download"></i>
 	        	<xsl:text>&#160;&#160;</xsl:text>
 	        	<xsl:text>Download</xsl:text>
 	        </a>
-
 	        <button class="listen btn pull-right" data-toggle="collapse" data-target="#audio">
 				<i class="icon-music"></i>
 				<xsl:text>&#160;&#160;</xsl:text>
 				<xsl:text>Listen</xsl:text>
 			</button>
 		</div>
-
 		<div class="wrap collapse" id="audio">
 			<xsl:if test="filename">
 				<div class="action">
@@ -569,25 +555,19 @@
 			        </div>
 			    </div>
 			</xsl:if>
-
 		</div>
-
 	</div>
-
 	<xsl:if test="number($pt3)">
 		<p class="share">
 			<label for="permalink">Paste link in email or IM</label>
 			<input type="text" name="permalink" value="http://accf.co/{$pt3}" onclick="this.select()" />
 		</p>
 	</xsl:if>
-
 </xsl:template>
 
 
 <xsl:template name="teaching-tag-list">
-
 	<xsl:param name="tags" />
-
 	<div class="tags">
 		<i class="icon-tags"></i>
 		<xsl:text>&#160;&#160;</xsl:text>
@@ -600,52 +580,40 @@
 			<xsl:text> </xsl:text>
 		</xsl:for-each>
 	</div>
-
 </xsl:template>
 
 
 <xsl:template name="date-teaching">
-
 	<xsl:param name="date" />
-
 	<xsl:call-template name="format-date">
 		<xsl:with-param name="date" select="$date" />
 		<xsl:with-param name="format" select="'%d+;, %m+; %d;%ds;, %y+;'" />
 	</xsl:call-template>
-
 </xsl:template>
 
 
 <xsl:template name="bible-book">
-
 	<xsl:param name="book" />
-
 	<a href="{$root}/{//tags-all-entries/entry[tag/@handle = 'teachings']/@id}/teachings/book/{$book/@handle}/">
 		<xsl:value-of select="$book" />
 	</a>
-
 </xsl:template>
 
 
 <xsl:template name="years-counter">
-
 	<xsl:param name="howMany">1997</xsl:param>
-
 	<xsl:if test="$howMany &lt; $this-year + 1">
 		<a href="{$root}/{$pt1}/{$pt2}/year/{$howMany}/"><xsl:value-of select="$howMany" /></a>
 		<xsl:if test="$howMany &lt; $this-year">, </xsl:if>
 		<xsl:call-template name="years-counter">
-		<xsl:with-param name="howMany" select="$howMany + 1" />
+			<xsl:with-param name="howMany" select="$howMany + 1" />
 		</xsl:call-template>
 	</xsl:if>
-
 </xsl:template>
 
 
 <xsl:template name="teaching-poster-or-default">
-
 	<xsl:param name="poster" />
-
 	<img style="width: 100%; height: 169px">
 		<xsl:attribute name="data-responsimage">
 			<xsl:choose>
@@ -658,14 +626,11 @@
 			</xsl:choose>
 		</xsl:attribute>
 	</img>
-
 </xsl:template>
 
 
 <xsl:template name="teachings-pagination">
-
 	<xsl:param name="entries" />
-
 	<xsl:call-template name="cd-pagination">
 		<xsl:with-param name="pagination" select="$entries/../pagination" />
 		<xsl:with-param name="pagination-url">
@@ -687,15 +652,13 @@
 			</xsl:if>
 		</xsl:with-param>
 	</xsl:call-template>
-
 </xsl:template>
 
-<xsl:template name="speaker-avatar">
 
+<xsl:template name="speaker-avatar">
 	<xsl:param name="photo" />
 	<xsl:param name="width" />
 	<xsl:param name="height" />
-
 	<img width="{$width}" height="{$height}" class="img-circle" data-responsimage-anchor="5">
 		<xsl:attribute name="data-responsimage">
 			<xsl:choose>
@@ -708,7 +671,6 @@
 			</xsl:choose>
 		</xsl:attribute>
 	</img>
-
 </xsl:template>
 
 

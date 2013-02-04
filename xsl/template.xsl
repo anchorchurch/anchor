@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
 <xsl:output
 	doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
 	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -9,9 +10,10 @@
 	indent="no"
 	/>
 
+
 <xsl:template name="template-head">
-	<link rel="stylesheet" href="{$workspace}/themes/active/css/anchor.2.4.1.css" />
-	<xsl:comment><![CDATA[[if lte IE 7]> <link rel="stylesheet" href="{$workspace}/themes/active/css/font-awesome-ie7.css" /> <![endif]]]></xsl:comment>
+	<link rel="stylesheet" href="{$workspace}/themes/active/css/common.css" />
+	<!-- <xsl:comment><![CDATA[[if lte IE 7]> <link rel="stylesheet" href="{$workspace}/themes/active/css/font-awesome-ie7.css" /> <![endif]]]></xsl:comment> -->
 	<link rel="canonical" href="{$current-url}" />
 	<xsl:choose>
 		<xsl:when test="number($pt1) and $pt1 = 20 and $pt3 or number($pt1) and $pt1 = 20 and $pt3">
@@ -24,28 +26,8 @@
 		</xsl:otherwise>
 	</xsl:choose>
 	<link rel="dns-prefetch" href="{$root}" />
-	<!--
-	<xsl:for-each select="//tags-all-entries/entry[ not(parent/item) and not(hide-from-header = 'Yes') ]">
-		<link rel="prerender" href="{$root}/{@id}/{description/@handle}/" />
-		<link rel="prefetch" href="{$root}/{@id}/{description/@handle}/" />
-	</xsl:for-each>
-	<meta http-equiv="x-dns-prefetch-control" content="on" />
-
-	<xsl:for-each select="//tags-all-entries/entry[ not(parent/item) and not(hide-from-header = 'Yes') ]">
-		<link rel="prerender" href="{$root}/{@id}/{description/@handle}/" />
-		<link rel="prefetch" href="{$root}/{@id}/{description/@handle}/" />
-	</xsl:for-each>
-	-->
-  <script>
-  	<xsl:comment>
-    var _gaq=[['_setAccount','UA-32000708-1'],['_trackPageview']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-  	</xsl:comment>
-	</script>
-
 </xsl:template>
+
 
 <xsl:template name="template-header-outside-container">
 	<div class="alerts">
@@ -200,16 +182,18 @@
 						<h3>Featured Content</h3>
 						<div id="frontCarousel" class="carousel slide">
               <div class="carousel-inner">
-                <div class="item active">
-									<xsl:for-each select="//teachings-featured-filtered/entry">
-										<xsl:call-template name="teaching-entry" />
-									</xsl:for-each>
-                </div>
-	              <xsl:if test="not($pt1) or $pt1 = 43">
-									<xsl:call-template name="component-featured">
+              	<xsl:choose>
+              		<xsl:when test="not($pt1) or $pt1 = 43">
+              			<xsl:call-template name="component-featured">
 										<xsl:with-param name="entries" select="//featured-random/entry" />
 									</xsl:call-template>
-								</xsl:if>
+              		</xsl:when>
+              		<xsl:otherwise>
+              			<xsl:for-each select="//teachings-featured-filtered/entry">
+									<xsl:call-template name="teaching-entry" />
+								</xsl:for-each>
+              		</xsl:otherwise>
+              	</xsl:choose>
               </div>
               <a class="left carousel-control" href="#frontCarousel" data-slide="prev">‹</a>
               <a class="right carousel-control" href="#frontCarousel" data-slide="next">›</a>
@@ -310,9 +294,7 @@
 
 
 <xsl:template name="template-footer-inside-container">
-
 	<xsl:if test="not($pt1) or $pt1 = 43">
-
 		<div class="component-teachings">
 			<div class="row">
 				<div class="span12">
@@ -324,100 +306,112 @@
                 		<xsl:text>span4 recent number</xsl:text>
                 		<xsl:value-of select="position()" />
                 	</xsl:attribute>
-                  <a>
-                      <xsl:call-template name="url-teachings" />
-
-                      <h4>
-                          <xsl:value-of select="title" disable-output-escaping="yes" />
-                      </h4>
-
-                    <div class="meta">
-                        <p>
-                            <xsl:call-template name="date-teaching">
-                                <xsl:with-param name="date" select="date/date/start/@iso" />
-                            </xsl:call-template>
-                        </p>
-                    </div>
-                    <div class="description">
-                        <xsl:call-template name="truncate">
-                            <xsl:with-param name="node" select="description" />
-                            <xsl:with-param name="length" select="110" />
-                        </xsl:call-template>
-                    </div>
-                	</a>
+									<a>
+										<xsl:call-template name="url-teachings" />
+										<h4>
+											<xsl:value-of select="title" disable-output-escaping="yes" />
+										</h4>
+										<div class="meta">
+											<p>
+												<xsl:call-template name="date-teaching">
+													<xsl:with-param name="date" select="date/date/start/@iso" />
+												</xsl:call-template>
+											</p>
+										</div>
+										<div class="description">
+											<xsl:call-template name="truncate">
+												<xsl:with-param name="node" select="description" />
+												<xsl:with-param name="length" select="110" />
+											</xsl:call-template>
+										</div>
+									</a>
                 </div>
               </xsl:for-each>
             </div>
 				</div>
 			</div>
-
 			<div class="component-series">
 				<h3>Recent Series</h3>
 				<div class="row">
 				    <xsl:for-each select="//teachings-series-home-filtered/entry">
-		            	<div class="span4 series">
-							<a>
-								<xsl:call-template name="url-teachings-series" />
-								<xsl:call-template name="teaching-poster-or-default">
-									<xsl:with-param name="poster" select="poster" />
-								</xsl:call-template>
-							</a>
+            	<div class="span4 series">
+								<a>
+									<xsl:call-template name="url-teachings-series" />
+									<xsl:call-template name="teaching-poster-or-default">
+										<xsl:with-param name="poster" select="poster" />
+									</xsl:call-template>
+								</a>
 						</div>
 					</xsl:for-each>
 				</div>
 			</div>
-
 		</div>
 	</xsl:if>
-
 	<div class="footer">
 		<div class="footer-nav container">
 			<div class="row">
 				<div class="span2">
 					<ul class="nav nav-list">
-						<li class="nav-header first"><a href="/7761/meetings/">Meetings</a></li><br />
-						<li class="nav-header"><a href="/21/teachings/">Teachings</a></li><br />
-						<li class="nav-header"><a href="/20/events/">Events</a></li><br />
-						<li class="nav-header"><a href="/22/ministries/">Ministries</a></li><br />
-						<li class="nav-header"><a href="/74/home-groups/">Home Groups</a></li><br />
-						<li class="nav-header"><a href="/18/about/">About</a></li>
+						<li class="nav-header first">
+							<a href="/7761/meetings/">Meetings</a>
+						</li>
+						<li class="nav-header">
+							<a href="/21/teachings/">Teachings</a>
+						</li>
+						<li class="nav-header">
+							<a href="/20/events/">Events</a>
+						</li>
+						<li class="nav-header">
+							<a href="/22/ministries/">Ministries</a>
+						</li>
+						<li class="nav-header">
+							<a href="/74/home-groups/">Home Groups</a>
+						</li>
+						<li class="nav-header">
+							<a href="/18/about/">About</a>
+						</li>
 					</ul>
 				</div>
 				<xsl:value-of select="normalize-space(//misc-all-entries/entry[name='footer']/content)" disable-output-escaping="yes" />
 				<div class="span4 twitter">
-					<h4><a href="http://twitter.com/atheycreek/" target="_blank"><i class="icon-twitter"></i>&#160;&#160;Recently on Twitter</a></h4>
+					<h4>
+						<a href="http://twitter.com/atheycreek/" target="_blank">
+							<i class="icon-twitter"></i>
+							<xsl:text>&#160;&#160;Recently on Twitter</xsl:text>
+						</a>
+					</h4>
 					<ul>
-					<xsl:for-each select="//twitter-latest-entry/entry">
-						<li>
-							<xsl:attribute name="class">
-								<xsl:text>entry</xsl:text>
-								<xsl:if test="position() = 1">
-									<xsl:text> first</xsl:text>
-								</xsl:if>
-								<xsl:if test="position() = last()">
-									<xsl:text> last</xsl:text>
-								</xsl:if>
-							</xsl:attribute>
-							<xsl:value-of select="normalize-space(content)" disable-output-escaping="yes" />
-							<xsl:text>&#160;&#160;</xsl:text>
-							<strong>
-								<xsl:call-template name="format-date">
-									<xsl:with-param name="date" select="date/date/start/@iso" />
-									<xsl:with-param name="format" select="'%d;'" />
-								</xsl:call-template>
-								<xsl:text>&#160;</xsl:text>
-								<xsl:call-template name="format-date">
-									<xsl:with-param name="date" select="date/date/start/@iso" />
-									<xsl:with-param name="format" select="'%m-;'" />
-								</xsl:call-template>
-								<xsl:text>&#160;</xsl:text>
-								<xsl:call-template name="format-date">
-									<xsl:with-param name="date" select="date/date/start/@iso" />
-									<xsl:with-param name="format" select="'%y+;'" />
-								</xsl:call-template>
-							</strong>
-						</li>
-					</xsl:for-each>
+						<xsl:for-each select="//twitter-latest-entry/entry">
+							<li>
+								<xsl:attribute name="class">
+									<xsl:text>entry</xsl:text>
+									<xsl:if test="position() = 1">
+										<xsl:text> first</xsl:text>
+									</xsl:if>
+									<xsl:if test="position() = last()">
+										<xsl:text> last</xsl:text>
+									</xsl:if>
+								</xsl:attribute>
+								<xsl:value-of select="normalize-space(content)" disable-output-escaping="yes" />
+								<xsl:text>&#160;&#160;</xsl:text>
+								<strong>
+									<xsl:call-template name="format-date">
+										<xsl:with-param name="date" select="date/date/start/@iso" />
+										<xsl:with-param name="format" select="'%d;'" />
+									</xsl:call-template>
+									<xsl:text>&#160;</xsl:text>
+									<xsl:call-template name="format-date">
+										<xsl:with-param name="date" select="date/date/start/@iso" />
+										<xsl:with-param name="format" select="'%m-;'" />
+									</xsl:call-template>
+									<xsl:text>&#160;</xsl:text>
+									<xsl:call-template name="format-date">
+										<xsl:with-param name="date" select="date/date/start/@iso" />
+										<xsl:with-param name="format" select="'%y+;'" />
+									</xsl:call-template>
+								</strong>
+							</li>
+						</xsl:for-each>
 					</ul>
 				</div>
 			</div>
@@ -445,7 +439,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="modal hide fade in modalLive" id="modalLive">
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button>
@@ -462,7 +455,6 @@
 	    <a href="#" class="link-small" data-dismiss="modal" aria-hidden="true">Close</a>
 	  </div>
 	</div>
-
 </xsl:template>
 
 
@@ -475,3 +467,4 @@
 
 
 </xsl:stylesheet>
+

@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 
-<xsl:template name="component-text">
+<xsl:template name="component-blog">
 	<xsl:param name="component" select="'text'" />
 	<xsl:param name="position" />
 	<xsl:param name="entries" />

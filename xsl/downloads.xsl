@@ -3,11 +3,9 @@
 
 
 <xsl:template name="component-downloads">
-
 	<xsl:param name="component" select="'downloads'" />
 	<xsl:param name="position" />
 	<xsl:param name="entries" />
-
 	<xsl:if test="count($entries)">
 		<div>
 			<xsl:call-template name="class-position">
@@ -21,8 +19,7 @@
 						<a target="_blank">
 							<xsl:call-template name="url-downloads" />
 							<i class="icon-file icon-large"></i>
-							<xsl:text>&#160;&#160;</xsl:text>
-							<xsl:text>&#160;&#160;</xsl:text>
+							<xsl:text>&#160;&#160;&#160;&#160;</xsl:text>
 							<span class="title">
 								<xsl:value-of select="name" />
 							</span>
